@@ -58,7 +58,7 @@ Finally, to start the training, it is enough to run the script:
 python train.py
 ```
 
-More details about training and experiments are written in the report: [Wandb report](https://wandb.ai/maximkm/HiFi-GAN/reports/-HiFi-GAN--VmlldzozMTk3MDI1)
+More details about training and experiments are written in the report: [Wandb report](https://wandb.ai/maximkm/HiFi-GAN/reports/-HiFi-GAN--VmlldzozMTk3MDI1?accessToken=ers5ldi16ww59pse3833ojpp4u5lvvdye56gw0kgfeqojv77shsfvxj4osn6yeqk)
 
 ## Credits
 
