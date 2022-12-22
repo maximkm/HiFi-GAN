@@ -66,7 +66,7 @@ if __name__ == '__main__':
     args.add_argument(
         "-c",
         "--checkpoint",
-        default='checkpoints/base_model.pth',
+        default='checkpoints/finetune_model.pth',
         type=str,
         help="the path to the checkpoint of the model",
     )
