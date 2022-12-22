@@ -31,7 +31,7 @@ train.py                         # Model Training script
 For inference, you need to download the checkpoint of the pre-trained model, it can be done like this:
 
 ```bash
-bash prepare_synthesis.sh
+bash prepare_inference.sh
 ```
 
 For the inference itself, it is enough to run the script `inference.py` to view all the startup arguments, you need to run it with the argument `--help`
