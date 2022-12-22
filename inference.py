@@ -2,6 +2,7 @@ import numpy as np
 import torch
 
 from scipy.io.wavfile import read
+from tqdm import tqdm
 import torchaudio
 import argparse
 import os
@@ -40,6 +41,8 @@ def main(args):
     
     load_file = get_load_func(mel_spec, args.sampling_rate, train_config.device)
     audio = []
+
+    print('Start loading files.')
     if args.file is not None:
         audio.append(load_file(args.file))
     if args.path is not None:
@@ -47,18 +50,24 @@ def main(args):
             audio.append(load_file(os.path.join(args.path, file)))
     
     assert len(audio) > 0, 'Need at least one audio'
+    print(f'{len(audio)} files have been prepared for the inference.')
+
     os.makedirs(args.output, exist_ok=True)
-    
-    for i in range(len(audio)):
+
+    for i in tqdm(range(len(audio))):
         mel, sr, name = audio[i]
         if len(mel.shape) == 2:
-            mel = mel.T.unsqueeze(0)
-        mel = mel.to(train_config.device)
-        new_wav = model(mel)
+            if mel.shape[1] == 80:
+                mel = mel.T
+            mel = mel.unsqueeze(0)
         
-        os.makedirs(args.output, exist_ok=True)
+        mel = mel.to(train_config.device)
+        with torch.inference_mode():
+            new_wav = model(mel)
+        
         filename = f"{name}_{i}.wav"
         torchaudio.save(os.path.join(args.output, filename), new_wav.squeeze(1).cpu(), sr)
+    print(f'All files save in "{args.output}" directory.')
 
 
 if __name__ == '__main__':
