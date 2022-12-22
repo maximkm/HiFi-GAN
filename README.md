@@ -1,4 +1,4 @@
-# HiFI-GAN project
+# HiFi-GAN project
 The project is made for educational purposes, as the homework of the course [deep learning for audio processing](https://github.com/markovka17/dla).
 
 ## Installation guide
