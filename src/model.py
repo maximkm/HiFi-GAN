@@ -110,6 +110,7 @@ class PeriodBlock(torch.nn.Module):
         self.conv_post = weight_norm(nn.Conv2d(1024, 1, (3, 1), 1, (1, 0)))
 
     def forward(self, x, fmap):
+        tmp = []
         bsz, ch, t = x.shape
         if t % self.period != 0:
             pad = self.period - (t % self.period)
@@ -120,10 +121,11 @@ class PeriodBlock(torch.nn.Module):
         for conv in self.conv_blocks:
             x = conv(x)
             x = F.leaky_relu(x, 0.1)
-            fmap.append(x)
+            tmp.append(x)
 
         x = self.conv_post(x)
-        fmap.append(x)
+        tmp.append(x)
+        fmap.append(tmp)
         return x.flatten(1, -1)
 
 
@@ -142,13 +144,15 @@ class ScaleBlock(torch.nn.Module):
         self.conv_post = conv_norm(nn.Conv1d(1024, 1, 3, 1, 1))
 
     def forward(self, x, fmap):
+        tmp = []
         for conv in self.conv_blocks:
             x = conv(x)
             x = F.leaky_relu(x, 0.1)
-            fmap.append(x)
+            tmp.append(x)
 
         x = self.conv_post(x)
-        fmap.append(x)
+        tmp.append(x)
+        fmap.append(tmp)
         return x.flatten(1, -1)
 
 
