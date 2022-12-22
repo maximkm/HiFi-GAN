@@ -71,7 +71,7 @@ def main(args):
 
 
 if __name__ == '__main__':
-    args = argparse.ArgumentParser(description="TTS Project")
+    args = argparse.ArgumentParser(description="HiFi-GAN Project")
     args.add_argument(
         "-c",
         "--checkpoint",
